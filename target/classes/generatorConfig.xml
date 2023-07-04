@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!--参考官方配置文档 https://mybatis.org/generator/configreference/xmlconfig.html-->
+<generatorConfiguration>
+    <context id="MySQLTables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 注释相关设置
+        mybatis generator 默认自动生成的注释没什么实际作用，而且还增加了代码量-->
+        <commentGenerator>
+            <!-- 是否取消自动生成时的注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否取消在注释中加上时间 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 链接数据库的配置 -->
+        <!--mysql 5.x-->
+        <!--        <jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+        <!--                        connectionURL='jdbc:mysql://127.0.0.1:3306/base_admin?serverTimezone=GMT%2b8'-->
+        <!--                        userId="root"-->
+        <!--                        password="root"/>-->
+        <!--mysql 8.0-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ssm_crud?useUnicode=true;characterEncoding=utf8;serverTimezone=GMT%2B8;useSSL=false"
+                        userId="root"
+                        password="123456">
+            <!--避免 Mybatis Generator 生成文件的时候错误使用了其它数据库的同名数据表
+                参考 https://www.cnblogs.com/coderLeo/p/12770673.html-->
+            <!--如果要生成这个数据库的全部表一定要加这个要不然就把你其他数据库里所有表都生成-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+
+        <!-- 生成实体类的设置  po\model-->
+        <!-- targetPackage 生成代码的目标目录 -->
+        <!-- targetProject 目录所属位置 -->
+        <javaModelGenerator targetPackage="com/atguigu/crud/entity" targetProject="src/main/java">
+            <!-- 在targetPackage的基础上根据schema再生成一层package 默认false -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否在get方法中 对String类型的字段做空的判断 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 是否生成一个包含所有字段的构造器 -->
+            <property name="constructorBased" value="false"/>
+            <!-- 是否创建一个不可变类-->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+        <!--关于生成映射文件的设置 路径targetProject/targetPackage-->
+        <sqlMapGenerator targetPackage="mapper2" targetProject="src/main/resources">
+            <!-- 在targetPackage的基础上根据schema再生成一层package 默认false -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--关于生成dao层的设置 dao mapper-->
+        <javaClientGenerator type="mapper" targetPackage="com/atguigu/crud/dao" targetProject="src/main/java">
+            <!--同上-->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--需要生成的代码对应的表名 可以存在多个table元素
+        tableName 数据库表名 %表示全部 domainObjectName实体类名称   xxxExample 是否生成Example类-->
+        <!--生成多个-->
+        <table tableName="%"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!-- 配置主键column 主键列名 ; identity 指定主键是否自增-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <!--        <table tableName="sys_role"-->
+        <!--               domainObjectName="SysRole"-->
+        <!--               enableCountByExample="false"-->
+        <!--               enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false"-->
+        <!--               enableSelectByExample="false"-->
+        <!--               selectByExampleQueryId="false">-->
+        <!--            &lt;!&ndash; 配置主键column 主键列名 ; identity 指定主键是否自增&ndash;&gt;-->
+        <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="sys_department"-->
+        <!--               domainObjectName="SysDepartment"-->
+        <!--               enableCountByExample="false"-->
+        <!--               enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false"-->
+        <!--               enableSelectByExample="false"-->
+        <!--               selectByExampleQueryId="false">-->
+        <!--            &lt;!&ndash; 配置主键column 主键列名 ; identity 指定主键是否自增&ndash;&gt;-->
+        <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--        </table>-->
+
+    </context>
+</generatorConfiguration>

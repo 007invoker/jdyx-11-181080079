@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.crud.dao.TblSalaryMapper">
+  <resultMap id="BaseResultMap" type="com.atguigu.crud.entity.TblSalary">
+    <id column="salary_id" jdbcType="INTEGER" property="salaryId" />
+    <result column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="basic_salary" jdbcType="DECIMAL" property="basicSalary" />
+    <result column="allowance" jdbcType="DECIMAL" property="allowance" />
+    <result column="bonus" jdbcType="DECIMAL" property="bonus" />
+    <result column="deductions" jdbcType="DECIMAL" property="deductions" />
+    <result column="net_salary" jdbcType="DECIMAL" property="netSalary" />
+    <result column="pay_date" jdbcType="DATE" property="payDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    salary_id, emp_id, basic_salary, allowance, bonus, deductions, net_salary, pay_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_salary
+    where salary_id = #{salaryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_salary
+    where salary_id = #{salaryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.atguigu.crud.entity.TblSalary">
+    insert into tbl_salary (salary_id, emp_id, basic_salary, 
+      allowance, bonus, deductions, 
+      net_salary, pay_date)
+    values (#{salaryId,jdbcType=INTEGER}, #{empId,jdbcType=INTEGER}, #{basicSalary,jdbcType=DECIMAL}, 
+      #{allowance,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL}, #{deductions,jdbcType=DECIMAL}, 
+      #{netSalary,jdbcType=DECIMAL}, #{payDate,jdbcType=DATE})
+  </insert>
+  <!-- 添加的getAllSalary方法 -->
+  <select id="getAllSalary" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tbl_salary
+  </select>
+  <insert id="insertSelective" parameterType="com.atguigu.crud.entity.TblSalary">
+    insert into tbl_salary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="salaryId != null">
+        salary_id,
+      </if>
+      <if test="empId != null">
+        emp_id,
+      </if>
+      <if test="basicSalary != null">
+        basic_salary,
+      </if>
+      <if test="allowance != null">
+        allowance,
+      </if>
+      <if test="bonus != null">
+        bonus,
+      </if>
+      <if test="deductions != null">
+        deductions,
+      </if>
+      <if test="netSalary != null">
+        net_salary,
+      </if>
+      <if test="payDate != null">
+        pay_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="salaryId != null">
+        #{salaryId,jdbcType=INTEGER},
+      </if>
+      <if test="empId != null">
+        #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="basicSalary != null">
+        #{basicSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="allowance != null">
+        #{allowance,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        #{bonus,jdbcType=DECIMAL},
+      </if>
+      <if test="deductions != null">
+        #{deductions,jdbcType=DECIMAL},
+      </if>
+      <if test="netSalary != null">
+        #{netSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.atguigu.crud.entity.TblSalary">
+    update tbl_salary
+    <set>
+      <if test="empId != null">
+        emp_id = #{empId,jdbcType=INTEGER},
+      </if>
+      <if test="basicSalary != null">
+        basic_salary = #{basicSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="allowance != null">
+        allowance = #{allowance,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        bonus = #{bonus,jdbcType=DECIMAL},
+      </if>
+      <if test="deductions != null">
+        deductions = #{deductions,jdbcType=DECIMAL},
+      </if>
+      <if test="netSalary != null">
+        net_salary = #{netSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="payDate != null">
+        pay_date = #{payDate,jdbcType=DATE},
+      </if>
+    </set>
+    where salary_id = #{salaryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.atguigu.crud.entity.TblSalary">
+    update tbl_salary
+    set emp_id = #{empId,jdbcType=INTEGER},
+      basic_salary = #{basicSalary,jdbcType=DECIMAL},
+      allowance = #{allowance,jdbcType=DECIMAL},
+      bonus = #{bonus,jdbcType=DECIMAL},
+      deductions = #{deductions,jdbcType=DECIMAL},
+      net_salary = #{netSalary,jdbcType=DECIMAL},
+      pay_date = #{payDate,jdbcType=DATE}
+    where salary_id = #{salaryId,jdbcType=INTEGER}
+  </update>
+</mapper>
